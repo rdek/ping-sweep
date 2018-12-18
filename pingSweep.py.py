@@ -1,10 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import multiprocessing
 import subprocess
 import sys
 import os
 import ipaddress
+import socket
 import locale
 
 language, output_encoding = locale.getdefaultlocale()
@@ -18,14 +19,10 @@ def pinger( job_q, results_q):
             subprocess.check_call(['ping','-c1',ip], stdout=DEVNULL)
             results_q.put(ip)
         except:
-            pass
+            #pass
+            exit
 
 if __name__ == '__main__':
-    if sys.argv[1] == 0:
-        print "Skrypt przyjmuje arkument w postaci adresu IP!"
-        exit 
-
-    
     pool_size = 255
 
     jobs = multiprocessing.Queue()
@@ -36,9 +33,10 @@ if __name__ == '__main__':
 
     for p in pool:
         p.start()
-    
+
     ipaddr = sys.argv[1]
-    ipaddr = ipaddr.decode('utf8')
+    print("IP:"+sys.argv[1])
+#    ipaddr = ipaddr.decode('utf8')
     ipaddr = ipaddress.ip_address(ipaddr)
     for i in range(1,255):
         jobs.put(ipaddr.format(i))

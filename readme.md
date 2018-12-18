@@ -2,7 +2,7 @@
 ## INSTALLATION:
 `pip install -r requirements.txt`
 ## Example usage:
-`python2 pingSweep.py`
+`python2 pingSweep.py <IP-to-check>`
 
 ## License:
 GPL
